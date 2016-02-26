@@ -1,0 +1,118 @@
+* { box-sizing: border-box; }
+.row:after { content: ""; clear: both; display: block; }
+[class*="col-"] { float: left; padding: 5px; }
+
+img { max-width: 100%; height: auto; }
+table { width:100%; text-align:center;}
+tr { height:2em; }
+
+[class*="col-"] {
+    width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+    /* For desktop: */
+    .col-1 {width: 8.33%;}
+    .col-2 {width: 16.66%;}
+    .col-3 {width: 25%;}
+    .col-4 {width: 33.33%;}
+    .col-5 {width: 41.66%;}
+    .col-6 {width: 50%;}
+    .col-7 {width: 58.33%;}
+    .col-8 {width: 66.66%;}
+    .col-9 {width: 75%;}
+    .col-10 {width: 83.33%;}
+    .col-11 {width: 91.66%;}
+    .col-12 {width: 100%;}
+}
+
+.col-m-1 {width: 8.33%;}
+.col-m-2 {width: 16.66%;}
+.col-m-3 {width: 25%;}
+.col-m-4 {width: 33.33%;}
+.col-m-5 {width: 41.66%;}
+.col-m-6 {width: 50%;}
+.col-m-7 {width: 58.33%;}
+.col-m-8 {width: 66.66%;}
+.col-m-9 {width: 75%;}
+.col-m-10 {width: 83.33%;}
+.col-m-11 {width: 91.66%;}
+.col-m-12 {width: 100%;}
+
+
+
+
+.row-1 {height: 8.33%;}
+.row-2 {height: 16.66%;}
+.row-3 {height: 25%;}
+.row-4 {height: 33.33%;}
+.row-5 {height: 41.66%;}
+.row-6 {height: 50%;}
+.row-7 {height: 58.33%;}
+.row-8 {height: 66.66%;}
+.row-9 {height: 75%; }
+.row-10 {height: 83.33%;}
+.row-11 {height: 91.66%;}
+.row-12 {height: 100%;}
+
+/*html {*/
+/*    font-family: "Lucida Sans", sans-serif;*/
+/*}*/
+.header {
+    background-color: #9933cc;
+}
+
+.header table
+{
+    color: #ffffff;
+}
+
+.menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.menu li {
+    padding: 8px;
+    margin-bottom: 7px;
+    background-color :#33b5e5;
+    color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.menu li:hover {
+    background-color: #0099cc;
+}
+
+.button {
+    background-color: #33b5e5;
+    color: #ffffff;
+    border-color: #ffffff;
+    border-width:3px;
+    border-style:solid;
+}
+
+.button p { text-align: center; }
+
+.button:hover { background-color: #0099cc; }
+
+input {
+    max-width:100%;
+    height:2em;
+    color: black;
+    font-size: 1.5em;
+    background: white;
+    padding-right:1.6em;
+}
+
+input:invalid
+{
+    background: #FFE0E0 url(excl.svg) no-repeat right center;
+    background-size: 1.5em 1.5em;
+}
+input:valid
+{
+    background: #E0FFE0 url(good.svg) no-repeat right center;
+    background-size: 1.5em 1.5em;
+}
+
+

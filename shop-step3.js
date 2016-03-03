@@ -13,6 +13,8 @@
 //    var myitems = [ {name:"Smile 1",icon:"smile1.svg", desc:"This is a very cool smile", price:0.99},
 //					{name:"Smile 2",icon:"smile2.svg", desc:"Another cool smile", price:2.99},
 //					{name:"Smile 3",icon:"smile3.svg", desc:"Smiles continued with <p>...", price:3.99} ];
+
+    var myitems = [];
  
 	var calculatePrice = function()
 	{
@@ -39,7 +41,7 @@
 		$('buydialog').style.display='block';
 	}
  
-    var updateContentF = function(myitems)
+    var updateContentF = function()
     {
         var itemcontainer = $("itemcontainer");
         itemcontainer.innerHTML = '<hr>';
@@ -79,8 +81,8 @@
         {
             if (xmlhttp.status == 200)
             {
-                var myitems = JSON.parse(xmlhttp.responseText);
-                updateContentF(myitems);
+                myitems = JSON.parse(xmlhttp.responseText);
+                updateContentF();
             }
             else
             {

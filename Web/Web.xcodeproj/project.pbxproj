@@ -1,0 +1,76 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXFileReference section */
+		38EEED781C88B08F0091759B /* shop-step3.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = "shop-step3.html"; path = "../shop-step3.html"; sourceTree = "<group>"; };
+		38EEED791C88B08F0091759B /* shop-step3.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "shop-step3.js"; path = "../shop-step3.js"; sourceTree = "<group>"; };
+		38EEED7A1C88B08F0091759B /* shop-step3.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = "shop-step3.php"; path = "../shop-step3.php"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		38EEED711C88B0860091759B = {
+			isa = PBXGroup;
+			children = (
+				38EEED781C88B08F0091759B /* shop-step3.html */,
+				38EEED791C88B08F0091759B /* shop-step3.js */,
+				38EEED7A1C88B08F0091759B /* shop-step3.php */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		38EEED721C88B0860091759B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+			};
+			buildConfigurationList = 38EEED751C88B0860091759B /* Build configuration list for PBXProject "Web" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 38EEED711C88B0860091759B;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		38EEED761C88B0860091759B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		38EEED771C88B0860091759B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		38EEED751C88B0860091759B /* Build configuration list for PBXProject "Web" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				38EEED761C88B0860091759B /* Debug */,
+				38EEED771C88B0860091759B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 38EEED721C88B0860091759B /* Project object */;
+}

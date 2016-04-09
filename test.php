@@ -2,6 +2,9 @@
     //phpinfo();
     
     error_reporting(E_ALL);
+    ini_set('display_startup_errors',1);
+    ini_set('display_errors',1);
+    error_reporting(-1);
     
     echo "Testing database PDO connection...<br>";
     
@@ -44,7 +47,7 @@
                  "password      VARCHAR( 128 ) NOT NULL,".
                  "admin         BIT);";
         
-        $db->exec($sqlcreate);
+        $conn->exec($sqlcreate);
         
         print("Created $table Table.<br>");
         
@@ -81,7 +84,7 @@
         
         $sqldrop ="DROP TABLE users";
         
-        $db->exec($sqldrop);
+        $conn->exec($sqldrop);
     }
     catch ( PDOException $e )
     {

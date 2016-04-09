@@ -47,7 +47,7 @@
                  "password      VARCHAR( 128 ) NOT NULL,".
                  "admin         BIT);";
         
-        $conn->exec($sqlcreate);
+        try { $conn->exec($sqlcreate); } catch ( PDOException $e ) { echo "Create table error. May be it exists."; }
         
         print("The table was created.<br>");
         

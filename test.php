@@ -67,11 +67,11 @@
             $isAdmin=$user[2];
             $insertquery->execute(array($username, $userpasshash, $isAdmin));
             
-            echo $insertquery->errorCode().'<br><br>'; // Five zeros are good like this 00000 but HY001 is a common error
-            echo $insertquery->rowCount();
+            echo "Insert error code = ".$insertquery->errorCode().'<br><br>'; // Five zeros are good like this 00000 but HY001 is a common error
+            echo "Number of rows inserted = ".$insertquery->rowCount()."<br>";
         }
         
-        print("Values where inserted<br>");
+        print "Selecting rows from table...<br>";
         
         $sqlselect = "SELECT login,password,admin FROM users";
         foreach ($conn->query($sqlselect) as $row)
@@ -80,11 +80,14 @@
                     htmlspecialchars($row['password'])." ".
                     "admin=".htmlspecialchars($row['admin'])."<br>";
         }
-        print("Values where selected...");
+        
+        print "Dropping table...<br>";
         
         $sqldrop ="DROP TABLE users";
         
         $conn->exec($sqldrop);
+        
+        print "The table was dropped <br>";
     }
     catch ( PDOException $e )
     {

@@ -1,7 +1,17 @@
 <?php
+    phpinfo();
+    
+    function printCollations($conn)
+    {
+        $sql = "SELECT name, description FROM sys.fn_helpcollations()";
+        foreach ($conn->query($sql) as $row)
+        {
+            print $row['name'] . "\t";
+            print $row['description'] . "<br>";
+        }
+    }
 
-    echo htmlspecialchars("Hello");
- 
+    
     try
     {
         foreach($_ENV as $k => $v)
@@ -16,8 +26,11 @@
  
     try
     {
-        $conn = new PDO ( "sqlsrv:server = tcp:mdavydovlab4.database.windows.net,1433; Database = MDavydovLab4", "mdavydov", "{your_password_here}");
+        $conn = new PDO( getenv("SQLCONNSTR_defaultConnection") );
+        
         $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+        
+        printCollations($conn);
     }
     catch ( PDOException $e )
     {

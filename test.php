@@ -1,15 +1,14 @@
 <?php
     //phpinfo();
     
-    error_reporting(E_ALL);
-    ini_set('display_startup_errors',1);
-    ini_set('display_errors',1);
-    error_reporting(-1);
+    //error_reporting(E_ALL);
+    //ini_set('display_startup_errors',1);
+    //ini_set('display_errors',1);
+    //error_reporting(-1);
     
     echo "Testing database PDO connection...<br>";
     
     $SECRET = "diu7ajksf8sj,vKLDHliewudksfj"; //  place this in WebApp settings
-    
     
     $connenv = getenv("SQLAZURECONNSTR_defaultConnection");
     parse_str(str_replace(";", "&", $connenv), $connarray);
@@ -91,9 +90,11 @@
     }
     catch ( PDOException $e )
     {
+        echo "Some PDO Error occured...";
+    
         // TODO: There is a security problem here. Do not do this in production!!!
-        print( "PDO Error : " );
-        die(print_r($e));
+        //print( "PDO Error : " );
+        //die(print_r($e));
     }
 
 ?>

@@ -67,11 +67,11 @@
             $isAdmin=$user[2];
             $insertquery->execute(array($username, $userpasshash, $isAdmin));
             
-            echo "Insert error code = ".$insertquery->errorCode().'<br><br>'; // Five zeros are good like this 00000 but HY001 is a common error
+            echo "Insert error code = ".$insertquery->errorCode()." "; // Five zeros are good like this 00000 but HY001 is a common error
             echo "Number of rows inserted = ".$insertquery->rowCount()."<br>";
         }
         
-        print "Selecting rows from table...<br>";
+        print "<br>Selecting rows from the table...<br>";
         
         $sqlselect = "SELECT login,password,admin FROM users";
         foreach ($conn->query($sqlselect) as $row)
@@ -81,7 +81,7 @@
                     "admin=".htmlspecialchars($row['admin'])."<br>";
         }
         
-        print "Dropping table...<br>";
+        print "Dropping the table...<br>";
         
         $sqldrop ="DROP TABLE users";
         

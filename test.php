@@ -27,7 +27,7 @@
     try
     {
         echo "Conn str = ".getenv("SQLAZURECONNSTR_defaultConnection");
-        $conn = new PDO( getenv("SQLAZURECONNSTR_defaultConnection") );
+        $conn = new PDO( "sqlsrv:".getenv("SQLAZURECONNSTR_defaultConnection") );
         
         $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
         

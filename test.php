@@ -49,7 +49,7 @@
         
         $conn->exec($sqlcreate);
         
-        print("Created $table Table.<br>");
+        print("The table was created.<br>");
         
         $sqlinsert = "insert into users (login,password,admin) values (?, ?, ?)";
         $insertquery = $conn->prepare($sqlinsert);
@@ -74,7 +74,7 @@
         print("Values where inserted<br>");
         
         $sqlselect = "SELECT login,password,admin FROM users";
-        foreach ($conn->query($sql) as $row)
+        foreach ($conn->query($sqlselect) as $row)
         {
             print   htmlspecialchars($row['login'])." ".
                     htmlspecialchars($row['password'])." ".

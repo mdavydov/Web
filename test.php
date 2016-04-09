@@ -42,7 +42,7 @@
         //printCollations($conn);
         
         
-        $sqlcreate ="CREATE TABLE users( ID INT( 11 ) AUTO_INCREMENT PRIMARY KEY,".
+        $sqlcreate ="CREATE TABLE users( ID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,".
                  "login         VARCHAR( 250 ) NOT NULL,".
                  "password      VARCHAR( 128 ) NOT NULL,".
                  "admin         BIT);";

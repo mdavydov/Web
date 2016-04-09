@@ -1,5 +1,5 @@
 <?php
-    phpinfo();
+    //phpinfo();
     
     function printCollations($conn)
     {
@@ -26,7 +26,7 @@
  
     try
     {
-        $conn = new PDO( getenv("SQLCONNSTR_defaultConnection") );
+        $conn = new PDO( getenv("SQLAZURECONNSTR_defaultConnection") );
         
         $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
         

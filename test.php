@@ -1,6 +1,8 @@
 <?php
     //phpinfo();
     
+    error_reporting(E_ALL);
+    
     echo "Testing database PDO connection...<br>";
     
     $SECRET = "diu7ajksf8sj,vKLDHliewudksfj"; //  place this in WebApp settings

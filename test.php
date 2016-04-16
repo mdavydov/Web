@@ -41,8 +41,11 @@
         
         print "Dropping the table...<br>";
         $sqldrop ="DROP TABLE users";
-        $conn->exec($sqldrop);
-        print "The table was dropped <br>";
+        try
+        {
+            $conn->exec($sqldrop);
+            print "The table was dropped <br>";
+        } catch ( PDOException $e ) { echo "Drop table error. May be it does not exist.<br>"; }
         
         $sqlcreate ="CREATE TABLE users( ".
                  "ID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,".
@@ -53,9 +56,10 @@
                  "admin         BIT".
                  ");";
         
-        try { $conn->exec($sqlcreate); } catch ( PDOException $e ) { echo "Create table error. May be it exists."; }
-        
-        print("The table was created.<br>");
+        try {
+            $conn->exec($sqlcreate);
+            print("The table was created.<br>");
+        } catch ( PDOException $e ) { echo "Create table error!!!"; }
         
         $sqlinsert = "insert into users (firstname, lastname, email, password, admin) values (?, ?, ?, ?, ?)";
         $insertquery = $conn->prepare($sqlinsert);
@@ -73,7 +77,7 @@
             $email     = $user[2];
             $userpasshash = hash( "whirlpool", $SECRET.$user[3].$SECRET, false );
             $isAdmin=$user[4];
-            $insertquery->execute(array($username, $userpasshash, $isAdmin));
+            $insertquery->execute(array($firstname, $lastname, $email, $userpasshash, $isAdmin));
             
             echo "Insert error code = ".$insertquery->errorCode()." "; // Five zeros are good like this 00000 but HY001 is a common error
             echo "Number of rows inserted = ".$insertquery->rowCount()."<br>";
@@ -91,9 +95,11 @@
         
         print "Dropping the table...<br>";
         
-        $sqldrop ="DROP TABLE users";
-        $conn->exec($sqldrop);
-        print "The table was dropped <br>";
+        try
+        {
+            $conn->exec($sqldrop);
+            print "The table was dropped <br>";
+        } catch ( PDOException $e ) { echo "Drop table error. May be it does not exist.<br>"; }
     }
     catch ( PDOException $e )
     {

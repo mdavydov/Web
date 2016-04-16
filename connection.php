@@ -1,4 +1,5 @@
 <?php
+    error_reporting(E_ALL);
 
     class UserTable
     {
@@ -103,9 +104,12 @@
             $conn = $this->conn || die("Database connection is closed");
             print "Dropping the table...<br>";
             $sqldrop ="DROP TABLE usertable";
+            print "line1";
             try
             {
+                print "line2";
                 $conn->exec($sqldrop);
+                print "line3";
                 print "The table was dropped <br>";
             }
             catch ( PDOException $e )
@@ -115,7 +119,6 @@
                 //print( "PDO Error : " );
                 //die(print_r($e));
             }
-
         }
     }
     

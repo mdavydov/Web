@@ -55,7 +55,15 @@
         
         function passwordHash($passwd)
         {
-            return hash( "whirlpool", $SECRET.$passwd.$SECRET, false );
+            echo "Line10<br>";
+            try
+            {
+                return hash( "whirlpool", $SECRET.$passwd.$SECRET, false );
+            }
+            catch(Exception $e)
+            {
+                print_r($e);
+            }
         }
         
         function addUser($firstname, $lastname, $email, $passwd)

@@ -76,7 +76,7 @@
             echo "Line1<br>";
             $insertquery = $conn->prepare($sqlinsert);
             echo "Line2<br>";
-            $passhash = passwordHash($passwd);
+            $passhash = $this->passwordHash($passwd);
             echo "Line3<br>";
             $isAdmin=0;
             
@@ -103,7 +103,7 @@
             $sqlselect = "select count(*) from usertable where email=? AND password=?";
             $query = $conn->prepare($sqlselect);
             
-            $passhash = passwordHash($passwd);
+            $passhash = $this->passwordHash($passwd);
             
             try
             {

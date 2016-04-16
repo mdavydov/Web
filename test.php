@@ -51,7 +51,7 @@
                  "ID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,".
                  "firstname     VARCHAR( 64 ) NOT NULL,".
                  "lastname      VARCHAR( 64 ) NOT NULL,".
-                 "email         VARCHAR( 64 ) NOT NULL UNIQUE KEY,".
+                 "email         VARCHAR( 64 ) PRIMARY KEY,".
                  "password      VARCHAR( 128 ) NOT NULL,".
                  "admin         BIT".
                  ")";

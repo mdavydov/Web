@@ -29,7 +29,8 @@
         
         function createTables()
         {
-            $conn = $this->conn || die("Database connection is closed");
+            $conn = $this->conn;
+            if (!$conn) die("Database connection is closed");
         
             $sqlcreate ="CREATE TABLE usertable( ".
                  "ID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,".
@@ -59,7 +60,8 @@
         
         function addUser($firstname, $lastname, $email, $passwd)
         {
-            $conn = $this->conn || die("Database connection is closed");
+            $conn = $this->conn;
+            if (!$conn) die("Database connection is closed");
             
             $sqlinsert = "insert into usertable (firstname, lastname, email, password, admin) values (?, ?, ?, ?, ?)";
             $insertquery = $conn->prepare($sqlinsert);
@@ -82,7 +84,8 @@
         
         function checkLogin($email, $passwd)
         {
-            $conn = $this->conn || die("Database connection is closed");
+            $conn = $this->conn;
+            if (!$conn) die("Database connection is closed");
             
             $sqlselect = "select count(*) from usertable where email=? AND password=?";
             $query = $conn->prepare($sqlselect);
@@ -101,8 +104,8 @@
         
         function drop()
         {
-            $conn = $this->conn || die("Database connection is closed");
-            print_r($conn);
+            $conn = $this->conn;
+            if (!$conn) die("Database connection is closed");
             
             print "Dropping the table...<br>";
             $sqldrop ="DROP TABLE usertable";

@@ -5,7 +5,7 @@
         var $SECRET = "diu7ajksf8sj,vKLDHliewudksfj"; //  place this in WebApp settings
         var $conn = NULL;
         
-        __construct()
+        function UserTable()
         {
             $connenv = getenv("SQLAZURECONNSTR_defaultConnection");
             parse_str(str_replace(";", "&", $connenv), $connarray);
@@ -21,28 +21,31 @@
             }
             catch ( PDOException $e )
             {
-                echo "Database connection error";
+                print_r($e);
+                die("Database connection error");
             }
         }
         
         function createTables()
         {
-            $sqlcreate ="CREATE TABLE users( ".
+            $conn = $this->conn || die("Database connection is closed");
+        
+            $sqlcreate ="CREATE TABLE usertable( ".
                  "ID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,".
                  "firstname     VARCHAR( 64 ) NOT NULL,".
                  "lastname      VARCHAR( 64 ) NOT NULL,".
-                 "email         VARCHAR( 64 ) NOT NULL UNIQUE KEY,".
+                 "email         VARCHAR( 64 ) NOT NULL UNIQUE,".
                  "password      VARCHAR( 128 ) NOT NULL,".
-                 "admin         BIT".
-                 ");";
+                 "admin         BIT  NOT NULL".
+                 ")";
             
             try
             {
-                $this->conn->exec($sqlcreate);
+                $conn->exec($sqlcreate);
             }
             catch ( PDOException $e )
             {
-                echo "Create table error. May be it exists.";
+                echo "Create table error. May be it exists."; die(print_r($e));
             }
             
             print("The table was created.<br>");
@@ -55,7 +58,8 @@
         
         function addUser($firstname, $lastname, $email, $passwd)
         {
-            $conn = $this->conn;
+            $conn = $this->conn || die("Database connection is closed");
+            
             $sqlinsert = "insert into usertable (firstname, lastname, email, password, admin) values (?, ?, ?, ?, ?)";
             $insertquery = $conn->prepare($sqlinsert);
             $passhash = passwordHash($passwd);
@@ -77,7 +81,8 @@
         
         function checkLogin($email, $passwd)
         {
-            $conn = $this->conn;
+            $conn = $this->conn || die("Database connection is closed");
+            
             $sqlselect = "select count(*) from usertable where email=? AND password=?";
             $query = $conn->prepare($sqlselect);
             
@@ -95,6 +100,7 @@
         
         function drop()
         {
+            $conn = $this->conn || die("Database connection is closed");
             print "Dropping the table...<br>";
             $sqldrop ="DROP TABLE usertable";
             try
@@ -104,8 +110,7 @@
             }
             catch ( PDOException $e )
             {
-                echo "Some PDO Error occured... The table was not dropped";
-            
+                echo "The table was not dropped"; print_r($e);
                 // TODO: There is a security problem here. Do not do this in production!!!
                 //print( "PDO Error : " );
                 //die(print_r($e));
@@ -115,6 +120,8 @@
     }
     
     $users = new UserTable();
+    
+    $users->drop();
     
     $users->createTables();
     
@@ -141,4 +148,6 @@
     {
         echo "User should NOT be present";
     }
+    
+    $users->drop();
 ?>

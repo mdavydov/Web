@@ -39,6 +39,11 @@
         $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
         //printCollations($conn);
         
+        print "Dropping the table...<br>";
+        $sqldrop ="DROP TABLE users";
+        $conn->exec($sqldrop);
+        print "The table was dropped <br>";
+        
         $sqlcreate ="CREATE TABLE users( ".
                  "ID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,".
                  "firstname     VARCHAR( 64 ) NOT NULL,".
@@ -87,9 +92,7 @@
         print "Dropping the table...<br>";
         
         $sqldrop ="DROP TABLE users";
-        
         $conn->exec($sqldrop);
-        
         print "The table was dropped <br>";
     }
     catch ( PDOException $e )

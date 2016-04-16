@@ -37,33 +37,37 @@
         $conn = new PDO( $connstring, $user, $pass );
         
         $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-        
         //printCollations($conn);
         
-        
-        $sqlcreate ="CREATE TABLE users( ID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,".
-                 "login         VARCHAR( 250 ) NOT NULL,".
+        $sqlcreate ="CREATE TABLE users( ".
+                 "ID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,".
+                 "firstname     VARCHAR( 64 ) NOT NULL,".
+                 "lastname      VARCHAR( 64 ) NOT NULL,".
+                 "email         VARCHAR( 64 ) NOT NULL UNIQUE KEY,".
                  "password      VARCHAR( 128 ) NOT NULL,".
-                 "admin         BIT);";
+                 "admin         BIT".
+                 ");";
         
         try { $conn->exec($sqlcreate); } catch ( PDOException $e ) { echo "Create table error. May be it exists."; }
         
         print("The table was created.<br>");
         
-        $sqlinsert = "insert into users (login,password,admin) values (?, ?, ?)";
+        $sqlinsert = "insert into users (firstname, lastname, email, password, admin) values (?, ?, ?, ?, ?)";
         $insertquery = $conn->prepare($sqlinsert);
       
         // test set of users
         $myusers = array(
-            array("admin", "adminpassword", 1),
-            array("user1", "user1password", 0),
-            array("user2", "user1password", 0) );
+            array("firstname", "lastname","admin@server.com", "adminpassword", 1),
+            array("firstname", "lastname","user1@server.com", "user1password", 0),
+            array("firstname", "lastname","user2@server.com", "user1password", 0) );
         
         foreach($myusers as $user)
         {
-            $username = $user[0];
-            $userpasshash = hash( "whirlpool", $SECRET.$user[1].$SECRET, false );
-            $isAdmin=$user[2];
+            $firstname = $user[0];
+            $lastname  = $user[1];
+            $email     = $user[2];
+            $userpasshash = hash( "whirlpool", $SECRET.$user[3].$SECRET, false );
+            $isAdmin=$user[4];
             $insertquery->execute(array($username, $userpasshash, $isAdmin));
             
             echo "Insert error code = ".$insertquery->errorCode()." "; // Five zeros are good like this 00000 but HY001 is a common error
@@ -72,10 +76,10 @@
         
         print "<br>Selecting rows from the table...<br>";
         
-        $sqlselect = "SELECT login,password,admin FROM users";
+        $sqlselect = "SELECT email,password,admin FROM users";
         foreach ($conn->query($sqlselect) as $row)
         {
-            print   htmlspecialchars($row['login'])." ".
+            print   htmlspecialchars($row['email'])." ".
                     htmlspecialchars($row['password'])." ".
                     "admin=".htmlspecialchars($row['admin'])."<br>";
         }
@@ -93,8 +97,8 @@
         echo "Some PDO Error occured...";
     
         // TODO: There is a security problem here. Do not do this in production!!!
-        //print( "PDO Error : " );
-        //die(print_r($e));
+        print( "PDO Error : " );
+        die(print_r($e));
     }
 
 ?>

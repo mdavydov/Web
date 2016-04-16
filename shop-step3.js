@@ -1,4 +1,3 @@
-
 "use strict";
 
 // hide local variables scope
@@ -6,7 +5,26 @@
 {
 	// jQuery-style notation
 	var $ = function (a) { return document.getElementById(a);}
-	
+ 
+    function errorF() { alert("Request Error. Check internet connection and try again"); }
+    function timeoutF() { alert("Request Timeout. Check internet connection and try again"); }
+ 
+    // Function to POST JSON queries
+    function postJSON(url, obj_to_send, responseF, errorF, timeoutF)
+    {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function()
+        {
+            if (xmlhttp.readyState != 4) return;
+            clearTimeout(timeout); // cancel timeout object
+            if (xmlhttp.status == 200) responseF( xmlhttp.responseText ); else errorF();
+        };
+        xmlhttp.open("POST", url, true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        var timeout = setTimeout( function () {xmlhttp.abort(); timeoutF();}, 10000); // 10 sec timeout
+        xmlhttp.send("json="+encodeURIComponent(JSON.stringify(obj_to_send)));
+    }
+ 
     //var h = Math.floor( Math.min( window.innerWidth, screen.availHeight) * 0.75);
     //$("itemcontainer").innerHTML = '<hr><div class="w3-row"><div class="w3-col" style="height:'+h+'px"><h3>Loading...</h3></div></div>';
 
@@ -16,7 +34,7 @@
 
     var myitems = [];
  
-	var calculatePrice = function()
+	function calculatePrice()
 	{
 		 var price = 0;
 		 var atLeastOneIsSelected = false;
@@ -28,7 +46,7 @@
 		 return [price, atLeastOneIsSelected];
 	}
  
-    var selectionChangeF = function()
+    function selectionChangeF()
     {
 		var price = calculatePrice();// [price, is_selected]
 		$("totalprice").innerHTML = "Total price =" + price[0].toFixed(2) + " грн.";
@@ -41,8 +59,38 @@
 		$('buydialog').style.display='block';
 	}
  
-    var updateContentF = function()
+    $("showlogindialog").onclick = function()
     {
+        $('authorizedialog').style.display='block';
+    }
+ 
+    $("showregisterdialog").onclick = function()
+    {
+        $('authorizedialog').style.display='none';
+        $('registerdialog').style.display='block';
+    }
+ 
+    $("reg_verpass").oninput = function()
+    {
+        $("reg_verpass").setCustomValidity($("reg_verpass").value === $("reg_pass").value ? "" : "Passwords do not match");
+    }
+ 
+    $("register").onclick = function()
+    {
+        var reg_request = { reg_first:$("reg_first").value,
+                            reg_last:$("reg_last").value,
+                            reg_email:$("reg_email").value,
+                            reg_pass:$("reg_pass").value   };
+ 
+        postJSON("register.php", reg_request,
+            function(jsontest) { $("log").appendChild(document.createTextNode(jsontest)); },
+            errorF, timeoutF);
+    }
+ 
+    function updateContentF(jsontext)
+    {
+        if (jsontext) myitems = JSON.parse(jsontext);
+ 
         var itemcontainer = $("itemcontainer");
         itemcontainer.innerHTML = '<hr>';
 
@@ -72,25 +120,8 @@
         selectionChangeF();
     }
  
-    // send loanding request
-    var xmlhttp = new XMLHttpRequest();
-    var url = "shop-step3.php";
-    xmlhttp.onreadystatechange = function()
-    {
-        if (xmlhttp.readyState == 4)
-        {
-            if (xmlhttp.status == 200)
-            {
-                myitems = JSON.parse(xmlhttp.responseText);
-                updateContentF();
-            }
-            else
-            {
-                alert("Error loading shop content. xmlhttp.status = " + xmlhttp.status);
-            }
-        }
-    };
-    xmlhttp.open("GET", url, true);
-    xmlhttp.send(); 
+    // loading shop items
+    postJSON("shop-step3.php", "", updateContentF, errorF, timeoutF);
+ 
 })();
 

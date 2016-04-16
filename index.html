@@ -1,14 +1,20 @@
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html>
     <meta charset="UTF-8"></meta>
     <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
     <link rel="stylesheet" href="w3.css"></link>
     <link rel="stylesheet" href="w3-theme-yellow.css"></link>
+    <link rel="stylesheet" href="validation.css"></link>
+    
     <body>
         <header class="w3-container w3-card-4 w3-theme">
             <h1>Smile Shop ver. 0.001</h1>
         </header>
         
+        <button id="showlogindialog" class="w3-btn w3-theme-l3">Login</button>
+        
+        <p id="log"><p>
+
         <div class="w3-container" id="itemcontainer">
         </div>
         
@@ -18,7 +24,7 @@
             <a href="http://www.flaticon.com">www.flaticon.com</a> </p>
         </footer>
         
-        <!-- The Modal Dialog-->
+        <!-- The Modal Dialog for buying items-->
         <div id="buydialog" class="w3-modal">
             <div class="w3-modal-content">
                 <div class="w3-container">
@@ -26,6 +32,60 @@
                         class="w3-closebtn">&times;</span>
                     <p>Дякуємо за замовлення!</p>
                     <p>Ваше замовлення вартує <span id="dialogprice"></span> грн.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- The Modal Dialog for authorization -->
+        <div id="authorizedialog" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                    <span onclick="document.getElementById('authorizedialog').style.display='none'"
+                        class="w3-closebtn">&times;</span>
+                    <p>Please enter your credentials</p>
+                    
+                    <label class="w3-label">Email</label>
+                    <input class="w3-input" type="email" id="log_email" required>
+                     
+                    <label class="w3-label">Password</label>
+                    <input class="w3-input" type="password" id="log_pass" required>
+                    
+                    <p><button id="loginbutton" class="w3-btn w3-theme-l3">Login</button>
+                    
+                    <p>Not registered yet?
+                    <button id="showregisterdialog" class="w3-btn w3-theme-l3">Register</button>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- The Modal Dialog for registration -->
+        <div id="registerdialog" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                    <span onclick="document.getElementById('registerdialog').style.display='none'"
+                        class="w3-closebtn">&times;</span>
+                    
+                    <p>Please provide the following information for registration:</p>
+                    
+                    <label class="w3-label">First Name</label>
+                    <input class="w3-input" type="text" id="reg_first" required>
+    
+                    <label class="w3-label">Last Name</label>
+                    <input class="w3-input" type="text" id="reg_last" required>
+                        
+                    <label class="w3-label">Email</label>
+                    <input class="w3-input" type="email" id="reg_email" required>
+                     
+                    <label class="w3-label">Password</label>
+                    <input class="w3-input" type="password" id="reg_pass" required>
+                     
+                    <label class="w3-label">Confirm Your Password</label>
+                    <input class="w3-input" type="password" id="reg_verpass" required>
+                        
+                    <p><button id="register" class="w3-btn w3-theme-l3">Register</button>
+                        
+                    </table>
                 </div>
             </div>
         </div>

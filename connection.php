@@ -47,7 +47,7 @@
             }
             catch ( PDOException $e )
             {
-                echo "Create table error. May be it exists."; die(print_r($e));
+                echo "Create table error. May be it exists.<br>"; die(print_r($e));
             }
             
             print("The table was created.<br>");
@@ -64,12 +64,17 @@
             if (!$conn) die("Database connection is closed");
             
             $sqlinsert = "insert into usertable (firstname, lastname, email, password, admin) values (?, ?, ?, ?, ?)";
+            
+            echo "Line1<br>";
             $insertquery = $conn->prepare($sqlinsert);
+            echo "Line2<br>";
             $passhash = passwordHash($passwd);
+            echo "Line3<br>";
             $isAdmin=0;
             
             try
             {
+                echo "Line4<br>";
                 $insertquery->execute(array($firstname, $lastname, $email, $passhash, $isAdmin));
                 echo "Insert error code = ".$insertquery->errorCode()." "; // Five zeros are good like this 00000
                 echo "Number of rows inserted = ".$insertquery->rowCount()."<br>";
@@ -109,17 +114,14 @@
             
             print "Dropping the table...<br>";
             $sqldrop ="DROP TABLE usertable";
-            print "line1";
             try
             {
-                print "line2";
                 $conn->exec($sqldrop);
-                print "line3";
                 print "The table was dropped <br>";
             }
             catch ( PDOException $e )
             {
-                echo "The table was not dropped"; print_r($e);
+                echo "The table was not dropped <br>";
                 // TODO: There is a security problem here. Do not do this in production!!!
                 //print( "PDO Error : " );
                 //die(print_r($e));

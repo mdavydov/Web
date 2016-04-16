@@ -102,6 +102,8 @@
         function drop()
         {
             $conn = $this->conn || die("Database connection is closed");
+            print_r($conn);
+            
             print "Dropping the table...<br>";
             $sqldrop ="DROP TABLE usertable";
             print "line1";

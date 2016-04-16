@@ -40,14 +40,14 @@
         //printCollations($conn);
         
         print "Dropping the table...<br>";
-        $sqldrop ="DROP TABLE users";
+        $sqldrop ="DROP TABLE usertable";
         try
         {
             $conn->exec($sqldrop);
             print "The table was dropped <br>";
         } catch ( PDOException $e ) { echo "Drop table error. May be it does not exist.<br>"; }
         
-        $sqlcreate ="CREATE TABLE users( ".
+        $sqlcreate ="CREATE TABLE usertable( ".
                  "ID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,".
                  "firstname     VARCHAR( 64 ) NOT NULL,".
                  "lastname      VARCHAR( 64 ) NOT NULL,".
@@ -61,10 +61,10 @@
             print("The table was created.<br>");
         } catch ( PDOException $e ) { echo "Create table error!!!"; }
         
-        $sqlinsert = "insert into users (firstname, lastname, email, password, admin) values (?, ?, ?, ?, ?)";
+        $sqlinsert = "insert into usertable (firstname, lastname, email, password, admin) values (?, ?, ?, ?, ?)";
         $insertquery = $conn->prepare($sqlinsert);
       
-        // test set of users
+        // test set of usertable
         $myusers = array(
             array("firstname", "lastname","admin@server.com", "adminpassword", 1),
             array("firstname", "lastname","user1@server.com", "user1password", 0),
@@ -85,7 +85,7 @@
         
         print "<br>Selecting rows from the table...<br>";
         
-        $sqlselect = "SELECT email,password,admin FROM users";
+        $sqlselect = "SELECT email,password,admin FROM usertable";
         foreach ($conn->query($sqlselect) as $row)
         {
             print   htmlspecialchars($row['email'])." ".

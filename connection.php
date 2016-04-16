@@ -56,7 +56,7 @@
         function addUser($firstname, $lastname, $email, $passwd)
         {
             $conn = $this->conn;
-            $sqlinsert = "insert into users (firstname, lastname, email, password, admin) values (?, ?, ?, ?, ?)";
+            $sqlinsert = "insert into usertable (firstname, lastname, email, password, admin) values (?, ?, ?, ?, ?)";
             $insertquery = $conn->prepare($sqlinsert);
             $passhash = passwordHash($passwd);
             $isAdmin=0;
@@ -78,7 +78,7 @@
         function checkLogin($email, $passwd)
         {
             $conn = $this->conn;
-            $sqlselect = "select count(*) from users where email=? AND password=?";
+            $sqlselect = "select count(*) from usertable where email=? AND password=?";
             $query = $conn->prepare($sqlselect);
             
             $passhash = passwordHash($passwd);
@@ -96,7 +96,7 @@
         function drop()
         {
             print "Dropping the table...<br>";
-            $sqldrop ="DROP TABLE users";
+            $sqldrop ="DROP TABLE usertable";
             try
             {
                 $conn->exec($sqldrop);

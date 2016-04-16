@@ -54,12 +54,12 @@
                  "email         VARCHAR( 64 ) NOT NULL UNIQUE KEY,".
                  "password      VARCHAR( 128 ) NOT NULL,".
                  "admin         BIT".
-                 ");";
+                 ")";
         
         try {
             $conn->exec($sqlcreate);
             print("The table was created.<br>");
-        } catch ( PDOException $e ) { echo "Create table error!!!"; }
+        } catch ( PDOException $e ) { echo "Create table error!!!"; die(print_r($e)); }
         
         $sqlinsert = "insert into usertable (firstname, lastname, email, password, admin) values (?, ?, ?, ?, ?)";
         $insertquery = $conn->prepare($sqlinsert);

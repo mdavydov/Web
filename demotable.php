@@ -1,10 +1,4 @@
 <?php
-    //phpinfo();
-    
-    //error_reporting(E_ALL);
-    //ini_set('display_startup_errors',1);
-    //ini_set('display_errors',1);
-    //error_reporting(-1);
     
     echo "Testing database PDO connection...<br>";
     
@@ -29,7 +23,7 @@
         $myusers = array(
             array("admin@server.com", "session1"),
             array("user1@server.com", "session2"),
-            array("user2@server.com", "session3");
+            array("user2@server.com", "session3") );
         
         foreach($myusers as $user)
         {
@@ -46,7 +40,7 @@
         {
             print   htmlspecialchars($row['email'])." ".
                     htmlspecialchars($row['sessionid'])."<br>";
-        }        
+        }
     }
     catch ( PDOException $e )
     {

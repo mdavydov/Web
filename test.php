@@ -41,6 +41,16 @@
             print $row[0] . "<br>";
         }
     }
+    
+    function printTodoItems($conn)
+    {
+        print "List of all tables:<br>";
+        $sql = "SELECT * FROM TodoItem WHERE sobjects.xtype = 'U'";
+        foreach ($conn->query($sql) as $row)
+        {
+            print $row[0]."--".$row[1]."--".$row[2]."--".$row[3]."<br>";
+        }
+    }
 
     try
     {
@@ -72,6 +82,7 @@
         } catch ( PDOException $e ) { echo "Create table error!!!"; die(print_r($e)); }
         
         printAllTables($conn);
+        printTodoItems($conn);
         
         $sqlinsert = "insert into usertable (firstname, lastname, email, password, admin) values (?, ?, ?, ?, ?)";
         $insertquery = $conn->prepare($sqlinsert);

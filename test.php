@@ -45,7 +45,7 @@
     function printTodoItems($conn)
     {
         print "List of all tables:<br>";
-        $sql = "SELECT * FROM md.TodoItem WHERE sobjects.xtype = 'U'";
+        $sql = "SELECT * FROM md.TodoItem";
         foreach ($conn->query($sql) as $row)
         {
             print $row[0]."--".$row[1]."--".$row[2]."--".$row[3]."<br>";

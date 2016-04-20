@@ -32,6 +32,16 @@
         }
     }
 
+    function printAllTables($conn)
+    {
+        print "List of all tables:<br>";
+        $sql = "SELECT sobjects.name FROM sysobjects sobjects WHERE sobjects.xtype = 'U'";
+        foreach ($conn->query($sql) as $row)
+        {
+            print $row[0] . "<br>";
+        }
+    }
+
     try
     {
         $conn = new PDO( $connstring, $user, $pass );
@@ -60,6 +70,8 @@
             $conn->exec($sqlcreate);
             print("The table was created.<br>");
         } catch ( PDOException $e ) { echo "Create table error!!!"; die(print_r($e)); }
+        
+        printAllTables($conn);
         
         $sqlinsert = "insert into usertable (firstname, lastname, email, password, admin) values (?, ?, ?, ?, ?)";
         $insertquery = $conn->prepare($sqlinsert);

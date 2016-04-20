@@ -41,16 +41,22 @@
                  "admin         BIT  NOT NULL".
                  ")";
             
+            $sqlcreatesessions ="CREATE TABLE sessions( ".
+                 "sessionid     VARCHAR( 64 ) NOT NULL PRIMARY KEY,".
+                 "email         VARCHAR( 64 ) NOT NULL UNIQUE,".
+                 "time          DATETIME NOT NULL DEFAULT GETDATE()".
+                 ")";
+            
             try
             {
                 $conn->exec($sqlcreate);
+                $conn->exec($sqlcreatesessions);
+                print("The table was created.<br>");
             }
             catch ( PDOException $e )
             {
-                echo "Create table error. May be it exists.<br>"; die(print_r($e));
+                echo "Create table error. May be it exists.<br>"; print_r($e); echo "<br>";
             }
-            
-            print("The table was created.<br>");
         }
         
         function passwordHash($passwd)
@@ -95,7 +101,7 @@
             }
         }
         
-        function checkLogin($email, $passwd)
+        function login($email, $passwd)
         {
             $conn = $this->conn;
             if (!$conn) die("Database connection is closed");
@@ -120,11 +126,11 @@
             $conn = $this->conn;
             if (!$conn) die("Database connection is closed");
             
-            print "Dropping the table...<br>";
-            $sqldrop ="DROP TABLE usertable";
             try
             {
-                $conn->exec($sqldrop);
+                print "Dropping the table...<br>";
+                $conn->exec("DROP TABLE usertable");
+                $conn->exec("DROP TABLE sessions");
                 print "The table was dropped <br>";
             }
             catch ( PDOException $e )

@@ -48,7 +48,7 @@
         $sql = "SELECT * FROM md.TodoItem";
         foreach ($conn->query($sql) as $row)
         {
-            print $row[0]."--".$row[1]."--".$row[2]."--".$row[3]."<br>";
+            print $row[0]."--".$row[1]."--".$row[2]."--".$row[3]."--".$row[4]."--".$row[5]."--".$row[6]."<br>";
         }
     }
 

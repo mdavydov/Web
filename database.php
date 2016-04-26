@@ -86,6 +86,7 @@
         
         function passwordHash($email, $passwd)
         {
+            $SECRET = $this->$SECRET;
             try
             {
                 return hash( "whirlpool", $SECRET.$email.$SECRET.$passwd.$SECRET, false );
@@ -127,10 +128,10 @@
                 
                 $q->execute(array($firstname, $lastname, $email, $passhash, $isAdmin));
                 
-                echo "Insert error code = ".$insertquery->errorCode()." "; // Five zeros are good like this 00000
-                echo "Number of rows inserted = ".$insertquery->rowCount()."<br>";
+                echo "Insert error code = ".$q->errorCode()." "; // Five zeros are good like this 00000
+                echo "Number of rows inserted = ".$q->rowCount()."<br>";
                 
-                if ($insertquery->errorCode() === "00000" && $insertquery->rowCount()==1) return true;
+                if ($q->errorCode() === "00000" && $q->rowCount()==1) return true;
             }
             catch ( PDOException $e )
             {

@@ -17,8 +17,6 @@
     
     set_error_handler("myErrorHandler");
     
-    $con->Hello();
-    
     class LoginFailedException extends Exception {}
     class SessionExpiredException extends Exception {}
 

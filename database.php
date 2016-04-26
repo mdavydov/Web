@@ -1,6 +1,24 @@
 <?php
     error_reporting(E_ALL);
     
+    function myErrorHandler($errno, $errstr, $errfile, $errline)
+    {
+//        if (!(error_reporting() & $errno))
+//        {
+//            // This error code is not included in error_reporting
+//            return;
+//        }
+
+        echo "<b>Error</b> [$errno] $errstr in <b>$errfile</b> line $errline <br />\n";
+
+        /* Don't execute PHP internal error handler */
+        return false;
+    }
+    
+    set_error_handler("myErrorHandler");
+    
+    $con->Hello();
+    
     class LoginFailedException extends Exception {}
     class SessionExpiredException extends Exception {}
 
@@ -105,9 +123,11 @@
             try
             {
                 echo "Before insert<br>";
-                $conn->prepare("insert into usertable (firstname, lastname, email, password, admin) ".
-                                "values (?, ?, ?, ?, ?)")->
-                                execute(array($firstname, $lastname, $email, $passhash, $isAdmin));
+                $q = $conn->prepare("insert into usertable (firstname, lastname, email, password, admin) ".
+                                "values (?, ?, ?, ?, ?)");
+                echo "Before execute<br>";
+                
+                $q->execute(array($firstname, $lastname, $email, $passhash, $isAdmin));
                 
                 echo "Insert error code = ".$insertquery->errorCode()." "; // Five zeros are good like this 00000
                 echo "Number of rows inserted = ".$insertquery->rowCount()."<br>";

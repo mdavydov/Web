@@ -104,6 +104,7 @@
             
             try
             {
+                echo "Before insert<br>";
                 $conn->prepare("insert into usertable (firstname, lastname, email, password, admin) ".
                                 "values (?, ?, ?, ?, ?)")->
                                 execute(array($firstname, $lastname, $email, $passhash, $isAdmin));

@@ -239,14 +239,23 @@
             $conn = $this->conn;
             if (!$conn) die("Database connection is not set");
             
-            print "Dumping sessions:<br>";
-            foreach($conn->query("select * from sessions") as $row)
+            try
             {
-                print_r($row); print "<br>";
+                print "Dumping sessions:<br>";
+                foreach($conn->query("select * from sessions") as $row)
+                {
+                    print_r($row); print "<br>";
+                }
             }
+            catch ( PDOException $e )
+            {
+                echo "Table sessions query error <br>";
+            }
+            
             print "<br>";
         }
     }
+    
     try
     {
     $users = new UserTable();

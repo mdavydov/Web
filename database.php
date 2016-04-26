@@ -226,7 +226,8 @@
             print "<br>";
         }
     }
-    
+    try
+    {
     $users = new UserTable();
     
     $users->drop();
@@ -260,4 +261,11 @@
     $users->dumpSessions();
     
     $users->drop();
+    
+    }
+    catch (Exception $e)
+    {
+        print "Exception!!! <br>";
+        print_r($e); print "<br>";
+    }
 ?>

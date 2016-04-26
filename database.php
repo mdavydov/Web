@@ -22,11 +22,11 @@
 
     class UserTable
     {
-        var $SECRET = "diu7ajksf8sj,vKLDHliewudksfj"; //  place this in WebApp settings
         var $conn = NULL;
         
         function UserTable()
         {
+            $this->$SECRET = "diu7ajksf8sj,vKLDHliewudksfj"
             $connenv = getenv("SQLAZURECONNSTR_defaultConnection");
             // There will be a problem if you have & or ; in your password
             parse_str(str_replace(";", "&", $connenv), $connarray);
@@ -100,6 +100,7 @@
         
         function newSessionHash($email)
         {
+            $SECRET = $this->$SECRET;
             try
             {
                 return hash( "sha256", $SECRET.$email.$SECRET.time().$SECRET, false );

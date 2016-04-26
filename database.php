@@ -246,6 +246,7 @@
                 {
                     print_r($row); print "<br>";
                 }
+                print "Dump end";
             }
             catch ( PDOException $e )
             {
@@ -271,6 +272,7 @@
     $users->dumpUsers();
     $users->dumpSessions();
     
+    print "Before list<br>";
     list($sess_id, $name) = $users->loginAndGetSessionIDandName("mail@user.com", "passwd");
     print "User ".$name." is logged in";
     $users->dumpSessions();

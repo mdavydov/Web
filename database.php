@@ -136,7 +136,7 @@
             }
             catch ( PDOException $e )
             {
-                print_r($e);
+                //print_r($e);
                 return false;
             }
         }
@@ -166,7 +166,7 @@
             $conn = $this->conn;
             if (!$conn) die("Database connection is not set");
             
-            list($firstname, $lastname) = $this->checkLoginAndGetName($email, $password);
+            list($firstname, $lastname) = $this->checkLoginAndGetName($email, $passwd);
 
             $conn->prepare("delete from sessions where email=?")->execute(array($email));
             

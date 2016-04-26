@@ -181,16 +181,22 @@
             {
                 print "Dropping usertable...<br>";
                 $conn->exec("DROP TABLE usertable");
-                print "Dropping sessions...<br>";
-                $conn->exec("DROP TABLE sessions");
-                print "Tables were dropped <br>";
+                echo "Table usertable was dropped <br>";
             }
             catch ( PDOException $e )
             {
-                echo "Tables were not dropped <br>";
-                // TODO: There is a security problem here. Do not do this in production!!!
-                //print( "PDO Error : " );
-                //die(print_r($e));
+                echo "Table usertable was not dropped <br>";
+            }
+            
+            try
+            {
+                print "Dropping sessions...<br>";
+                $conn->exec("DROP TABLE sessions");
+                print "Table sessions was dropped <br>";
+            }
+            catch ( PDOException $e )
+            {
+                echo "Table sessions was not dropped <br>";
             }
         }
         

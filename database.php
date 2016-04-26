@@ -23,10 +23,10 @@
     class UserTable
     {
         var $conn = NULL;
+        var $SECRET = "diu7ajksf8sj,vKLDHliewudksfj";
         
         function UserTable()
         {
-            $this->$SECRET = "diu7ajksf8sj,vKLDHliewudksfj";
             $connenv = getenv("SQLAZURECONNSTR_defaultConnection");
             // There will be a problem if you have & or ; in your password
             parse_str(str_replace(";", "&", $connenv), $connarray);
@@ -86,7 +86,7 @@
         
         function passwordHash($email, $passwd)
         {
-            $SECRET = $this->$SECRET;
+            $SECRET = $this->SECRET;
             try
             {
                 return hash( "whirlpool", $SECRET.$email.$SECRET.$passwd.$SECRET, false );
@@ -100,7 +100,7 @@
         
         function newSessionHash($email)
         {
-            $SECRET = $this->$SECRET;
+            $SECRET = $this->SECRET;
             try
             {
                 return hash( "sha256", $SECRET.$email.$SECRET.time().$SECRET, false );

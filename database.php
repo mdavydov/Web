@@ -26,7 +26,7 @@
         
         function UserTable()
         {
-            $this->$SECRET = "diu7ajksf8sj,vKLDHliewudksfj"
+            $this->$SECRET = "diu7ajksf8sj,vKLDHliewudksfj";
             $connenv = getenv("SQLAZURECONNSTR_defaultConnection");
             // There will be a problem if you have & or ; in your password
             parse_str(str_replace(";", "&", $connenv), $connarray);

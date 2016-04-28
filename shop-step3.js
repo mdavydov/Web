@@ -180,7 +180,6 @@
             {
                 alert(js);
                 var resp = JSON.parse(js);
-                alert(resp);
                 if (resp.error == 0)
                 {
                     setText('registration', "Logged in as " + resp.user);

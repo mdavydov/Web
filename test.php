@@ -1,4 +1,6 @@
 <?php
+
+    include "private.php";
     //phpinfo();
     
     //error_reporting(E_ALL);
@@ -10,12 +12,15 @@
     
     $SECRET = "diu7ajksf8sj,vKLDHliewudksfj"; //  place this in WebApp settings
     
-    $connenv = getenv("SQLAZURECONNSTR_defaultConnection");
-    parse_str(str_replace(";", "&", $connenv), $connarray);
+    if (!$connstring)
+    {
+        $connenv = getenv("SQLAZURECONNSTR_defaultConnection");
+        parse_str(str_replace(";", "&", $connenv), $connarray);
     
-    $connstring = "sqlsrv:Server=".$connarray["Data_Source"].";Database=".$connarray["Initial_Catalog"];
-    $user = $connarray["User_Id"];
-    $pass = $connarray["Password"];
+        $connstring = "sqlsrv:Server=".$connarray["Data_Source"].";Database=".$connarray["Initial_Catalog"];
+        $user = $connarray["User_Id"];
+        $pass = $connarray["Password"];
+    }
     
     //var_dump($connarray);
     //var_dump($connstring);

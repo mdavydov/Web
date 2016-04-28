@@ -7,10 +7,20 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		381324B71CC65BA600C9A90B /* demotable.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = demotable.php; path = ../demotable.php; sourceTree = "<group>"; };
+		3822B3741CC27FEE003E8C34 /* validation.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = validation.css; path = ../validation.css; sourceTree = "<group>"; };
+		3822B3751CC2966F003E8C34 /* register.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = register.php; path = ../register.php; sourceTree = "<group>"; };
+		3822B3761CC2A477003E8C34 /* database.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = database.php; path = ../database.php; sourceTree = "<group>"; };
 		3830A3451CAA84F00099CAC0 /* web.config */ = {isa = PBXFileReference; lastKnownFileType = text; name = web.config; path = ../web.config; sourceTree = "<group>"; };
 		3830A3461CAA85120099CAC0 /* test.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = test.php; path = ../test.php; sourceTree = "<group>"; };
 		3830A3471CAAAFAC0099CAC0 /* w3-theme-yellow.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "w3-theme-yellow.css"; path = "../w3-theme-yellow.css"; sourceTree = "<group>"; };
 		3830A3481CAAAFAC0099CAC0 /* w3.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = w3.css; path = ../w3.css; sourceTree = "<group>"; };
+		385E23031CD0DA0E0083010F /* private.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = private.php; path = ../private.php; sourceTree = "<group>"; };
+		385E23041CD0E07A0083010F /* checkcookie.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = checkcookie.php; path = ../checkcookie.php; sourceTree = "<group>"; };
+		385E23051CD0EA430083010F /* recreate.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = recreate.php; path = ../recreate.php; sourceTree = "<group>"; };
+		385E23061CD0F1C40083010F /* signout.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = signout.php; path = ../signout.php; sourceTree = "<group>"; };
+		385E23071CD10B000083010F /* login.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = login.php; path = ../login.php; sourceTree = "<group>"; };
+		38A295801CD277FA0001A5E7 /* checksession.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = checksession.php; path = ../checksession.php; sourceTree = "<group>"; };
 		38B7BAE21CAAF8C4001F2E67 /* composer.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = composer.json; path = ../composer.json; sourceTree = "<group>"; };
 		38EEED781C88B08F0091759B /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = index.html; path = ../index.html; sourceTree = "<group>"; };
 		38EEED791C88B08F0091759B /* shop-step3.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "shop-step3.js"; path = "../shop-step3.js"; sourceTree = "<group>"; };
@@ -21,14 +31,24 @@
 		38EEED711C88B0860091759B = {
 			isa = PBXGroup;
 			children = (
+				3822B3741CC27FEE003E8C34 /* validation.css */,
 				38B7BAE21CAAF8C4001F2E67 /* composer.json */,
 				3830A3471CAAAFAC0099CAC0 /* w3-theme-yellow.css */,
 				3830A3481CAAAFAC0099CAC0 /* w3.css */,
 				3830A3461CAA85120099CAC0 /* test.php */,
+				381324B71CC65BA600C9A90B /* demotable.php */,
+				3822B3761CC2A477003E8C34 /* database.php */,
+				385E23071CD10B000083010F /* login.php */,
+				3822B3751CC2966F003E8C34 /* register.php */,
+				38A295801CD277FA0001A5E7 /* checksession.php */,
 				3830A3451CAA84F00099CAC0 /* web.config */,
 				38EEED781C88B08F0091759B /* index.html */,
 				38EEED791C88B08F0091759B /* shop-step3.js */,
 				38EEED7A1C88B08F0091759B /* shop-step3.php */,
+				385E23031CD0DA0E0083010F /* private.php */,
+				385E23041CD0E07A0083010F /* checkcookie.php */,
+				385E23051CD0EA430083010F /* recreate.php */,
+				385E23061CD0F1C40083010F /* signout.php */,
 			);
 			sourceTree = "<group>";
 		};

@@ -8,10 +8,14 @@
     
     <body>
         <header class="w3-container w3-card-4 w3-theme">
-            <h1>Smile Shop ver. 0.001</h1>
+            <h1>Smile Shop ver. 0.002</h1>
         </header>
         
-        <button id="showlogindialog" class="w3-btn w3-theme-l3">Login</button>
+        <span id="registration"></span>
+        <button id="login" class="w3-btn w3-theme-l3">Login</button>
+        <button id="signout" class="w3-btn w3-theme-l3">Sign Out</button>
+        <button id="checksession" class="w3-btn w3-theme-l3">Check Session</button>
+        <button id="checkcookiebutton" class="w3-btn w3-theme-l3">Check Cookie</button>
         
         <p id="log"><p>
 
@@ -37,10 +41,10 @@
         </div>
         
         <!-- The Modal Dialog for authorization -->
-        <div id="authorizedialog" class="w3-modal">
+        <div id="logindialog" class="w3-modal">
             <div class="w3-modal-content">
                 <div class="w3-container">
-                    <span onclick="document.getElementById('authorizedialog').style.display='none'"
+                    <span onclick="document.getElementById('logindialog').style.display='none'"
                         class="w3-closebtn">&times;</span>
                     <p>Please enter your credentials</p>
                     

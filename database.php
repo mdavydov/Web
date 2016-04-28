@@ -1,4 +1,6 @@
 <?php
+    include "private.php";
+
     error_reporting(E_ALL);
     
     function myErrorHandler($errno, $errstr, $errfile, $errline)
@@ -11,7 +13,7 @@
 
         echo "<b>Error</b> [$errno] $errstr in <b>$errfile</b> line $errline <br />\n";
 
-        /* Don't execute PHP internal error handler */
+        /* Execute PHP internal error handler */
         return false;
     }
     
@@ -27,13 +29,17 @@
         
         function UserTable()
         {
-            $connenv = getenv("SQLAZURECONNSTR_defaultConnection");
-            // There will be a problem if you have & or ; in your password
-            parse_str(str_replace(";", "&", $connenv), $connarray);
-    
-            $connstring = "sqlsrv:Server=".$connarray["Data_Source"].";Database=".$connarray["Initial_Catalog"];
-            $user = $connarray["User_Id"];
-            $pass = $connarray["Password"];
+            global $connstring, $user, $pass;
+            
+            if (!$connstring)
+            {
+                $connenv = getenv("SQLAZURECONNSTR_defaultConnection");
+                parse_str(str_replace(";", "&", $connenv), $connarray);
+            
+                $connstring = "sqlsrv:Server=".$connarray["Data_Source"].";Database=".$connarray["Initial_Catalog"];
+                $user = $connarray["User_Id"];
+                $pass = $connarray["Password"];
+            }
             
             try
             {
@@ -122,15 +128,13 @@
             
             try
             {
-                echo "Before insert<br>";
                 $q = $conn->prepare("insert into usertable (firstname, lastname, email, password, admin) ".
                                 "values (?, ?, ?, ?, ?)");
-                echo "Before execute<br>";
                 
                 $q->execute(array($firstname, $lastname, $email, $passhash, $isAdmin));
                 
-                echo "Insert error code = ".$q->errorCode()." "; // Five zeros are good like this 00000
-                echo "Number of rows inserted = ".$q->rowCount()."<br>";
+                //echo "Insert error code = ".$q->errorCode()." "; // Five zeros are good like this 00000
+                //echo "Number of rows inserted = ".$q->rowCount()."<br>";
                 
                 if ($q->errorCode() === "00000" && $q->rowCount()==1) return true;
             }
@@ -150,13 +154,33 @@
             $sqlselect = "select firstname, lastname from usertable where email=? AND password=?";
             $query = $conn->prepare($sqlselect);
             $passhash = $this->passwordHash($email, $passwd);
+            $query->execute(array($email, $passhash));
             
-            foreach( $query->query(array($email, $passhash)) as $row)
+            foreach($query as $row)
             {
                 // There is such a user
                 return array($row[0], $row[1]);
             }
             // incorrect login/password
+            throw new LoginFailedException();
+        }
+        
+        // returns user's ($firstname ." ". $lastname) or throws LoginFailedException, PDOException
+        function getUserNameByEmail($email)
+        {
+            $conn = $this->conn;
+            if (!$conn) die("Database connection is not set");
+            
+            $sqlselect = "select firstname, lastname from usertable where email=?";
+            $query = $conn->prepare($sqlselect);
+            $query->execute(array($email));
+            
+            foreach($query as $row)
+            {
+                // There is such a user
+                return $row[0]. " ".$row[1];
+            }
+            // incorrect email
             throw new LoginFailedException();
         }
         
@@ -166,15 +190,33 @@
             $conn = $this->conn;
             if (!$conn) die("Database connection is not set");
             
+            //print "before checkLoginAndGetName <br>";
+            
             list($firstname, $lastname) = $this->checkLoginAndGetName($email, $passwd);
 
             $conn->prepare("delete from sessions where email=?")->execute(array($email));
             
-            $new_session_id = newSessionHash($email);
+            $new_session_id = $this->newSessionHash($email);
             $conn->prepare("insert into sessions(sessionid, email) values(?,?)")->
                         execute(array($new_session_id, $email));
 
             return array($new_session_id, $firstname." ".$lastname);
+        }
+        
+        function signOut($sess_id)
+        {
+            $conn = $this->conn;
+            if (!$conn) die("Database connection is not set");
+            
+            try
+            {
+                $conn->prepare("delete from sessions where sessionid=?")->execute(array($sess_id));
+                return true;
+            }
+            catch(Exception $e)
+            {
+                return false;
+            }
         }
         
         // returns email or throws SessionExpiredException.
@@ -183,14 +225,25 @@
             $conn = $this->conn;
             if (!$conn) die("Database connection is not set");
             
-            $query = $conn->prepare("select email from sessions where sessionid=? and DATEDIFF(second, time, GETDATE()) > ?");
-            foreach($query->query(array($session_id, $expire_seconds)) as $row)
+            $query = $conn->prepare("select email from sessions where sessionid=? and DATEDIFF(second, time, GETDATE()) < ?");
+            $query->execute(array($session_id, $expire_seconds));
+            
+            foreach($query as $row)
             {
-                // There is such a session
+                // There is such a session. Update expire time
+                
                 return $row[0];
             }
             // session is expired or was never created
             throw new SessionExpiredException();
+        }
+        
+        function updateSessionExpirationTime($session_id)
+        {
+            $conn = $this->conn;
+            if (!$conn) die("Database connection is not set");
+            
+            $conn->prepare("UPDATE sessions SET time=GETDATE() where sessionid=?")->execute(array($session_id));
         }
         
         function drop()
@@ -257,47 +310,52 @@
         }
     }
     
-    try
+    function usertest()
     {
-    $users = new UserTable();
-    
-    $users->drop();
-    
-    $users->createTables();
-    
-    $users->addUser("User1", "Login1", "mail@user.com", "passwd");
-    $users->addUser("User2", "Login2", "mail1@user.com", "passwd1");
-    $users->addUser("SameUser", "SameUser", "mail@user.com", "passwd1");
-    
-    $users->dumpUsers();
-    $users->dumpSessions();
-    
-    print "Before list<br>";
-    list($sess_id, $name) = $users->loginAndGetSessionIDandName("mail@user.com", "passwd");
-    print "User ".$name." is logged in";
-    $users->dumpSessions();
-    
-    $email = getEmailBySessionId($sess_id,10);
-    assert($email == "mail@user.com");
-    sleep(2);
-    try
-    {
-        getEmailBySessionId($sess_id, 1);
-        assert(false, "The session should be already expired");
+        try
+        {
+        $users = new UserTable();
+        
+        $users->drop();
+        
+        $users->createTables();
+        
+        $users->addUser("User1", "Login1", "mail@user.com", "passwd");
+        $users->addUser("User2", "Login2", "mail1@user.com", "passwd1");
+        $users->addUser("SameUser", "SameUser", "mail@user.com", "passwd1");
+        
+        $users->dumpUsers();
+        $users->dumpSessions();
+        
+        print "Before list<br>";
+        list($sess_id, $name) = $users->loginAndGetSessionIDandName("mail@user.com", "passwd");
+        print "User $name is logged in with session $sess_id<br>";
+        $users->dumpSessions();
+        
+        $email = $users->getEmailBySessionId($sess_id,10);
+        assert($email == "mail@user.com");
+        sleep(2);
+        try
+        {
+            $users->getEmailBySessionId($sess_id, 1);
+            assert(false, "The session should be already expired");
+        }
+        catch(SessionExpiredException $e)
+        {
+            print "OK. Session is expired <br>";
+        }
+        
+        $users->dumpSessions();
+        
+        $users->drop();
+        
+        }
+        catch (Exception $e)
+        {
+            print "Exception!!! <br>";
+            print_r($e); print "<br>";
+        }
     }
-    catch(SessionExpiredException $e)
-    {
-        print "OK. Session is expired <br>";
-    }
     
-    $users->dumpSessions();
-    
-    $users->drop();
-    
-    }
-    catch (Exception $e)
-    {
-        print "Exception!!! <br>";
-        print_r($e); print "<br>";
-    }
+    //usertest();
 ?>

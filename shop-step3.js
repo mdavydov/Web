@@ -8,6 +8,21 @@
  
     function errorF() { alert("Request Error. Check internet connection and try again"); }
     function timeoutF() { alert("Request Timeout. Check internet connection and try again"); }
+    function logF(jsontest) { alert(jsontest); }
+    function appendLogF(jsontest) { $("log").appendChild(document.createTextNode(jsontest)); }
+    function setText(nodeName, text)
+    {
+        if ($(nodeName).childNodes.length > 0)
+        {
+            $(nodeName).replaceChild(document.createTextNode(text), $(nodeName).childNodes[0] );
+        }
+        else
+        {
+            $(nodeName).appendChild(document.createTextNode(text));
+        }
+    }
+    function hide(el) { $(el).style.display="none"; }
+    function show(el) { $(el).style.display="inline"; }
  
     // Function to POST JSON queries
     function postJSON(url, obj_to_send, responseF, errorF, timeoutF)
@@ -59,20 +74,98 @@
 		$('buydialog').style.display='block';
 	}
  
-    $("showlogindialog").onclick = function()
+    $("login").onclick = function()
     {
-        $('authorizedialog').style.display='block';
+        $('logindialog').style.display='block';
     }
+ 
+    $("checkcookiebutton").onclick = function()
+    {
+        postJSON("checkcookie.php", "", logF, errorF, timeoutF);
+    }
+ 
  
     $("showregisterdialog").onclick = function()
     {
-        $('authorizedialog').style.display='none';
+        $('logindialog').style.display='none';
         $('registerdialog').style.display='block';
     }
  
     $("reg_verpass").oninput = function()
     {
         $("reg_verpass").setCustomValidity($("reg_verpass").value === $("reg_pass").value ? "" : "Passwords do not match");
+    }
+ 
+    $("loginbutton").onclick = function()
+    {
+        var log_request = { log_email:$("log_email").value,
+                            log_pass:$("log_pass").value   };
+ 
+        postJSON("login.php", log_request,
+            function(js)
+            {
+                alert(js);
+                var resp = JSON.parse(js);
+                if (resp.error == 0)
+                {
+                    setText('registration', "Logged in as " + resp.user);
+                    show("signout");
+                    hide("login");
+                    hide("logindialog");
+                }
+                else
+                {
+                    alert("Login failed");
+                }
+            }, errorF, timeoutF);
+    }
+ 
+    // verify session
+    function verifysession()
+    {
+        postJSON("checksession.php", "",
+            function(js)
+            {
+                alert(js);
+                var resp = JSON.parse(js);
+                if (resp.error == 0)
+                {
+                    setText("registration", "Logged in as " + resp.user);
+                    show("signout");
+                    hide("login");
+                }
+                else
+                {
+                    setText("registration", "");
+                    hide("signout");
+                    show("login");
+                }
+            }
+            , errorF, timeoutF);
+    }
+ 
+    verifysession();
+ 
+ 
+    $("checksession").onclick = function()
+    {
+        verifysession()
+    }
+ 
+    $("signout").onclick = function()
+    {
+        postJSON("signout.php", "",
+        function(js)
+        {
+            alert(js);
+            var resp = JSON.parse(js);
+            if (resp.error == 0)
+            {
+                setText("registration", "");
+                hide("signout");
+                show("login");
+            }
+        }, errorF, timeoutF);
     }
  
     $("register").onclick = function()
@@ -83,8 +176,19 @@
                             reg_pass:$("reg_pass").value   };
  
         postJSON("register.php", reg_request,
-            function(jsontest) { $("log").appendChild(document.createTextNode(jsontest)); },
-            errorF, timeoutF);
+            function(js)
+            {
+                alert(js);
+                var resp = JSON.parse(js);
+                alert(resp);
+                if (resp.error == 0)
+                {
+                    setText('registration', "Logged in as " + resp.user);
+                    show("signout");
+                    hide("login");
+                    hide("registerdialog");
+                }
+            }, errorF, timeoutF);
     }
  
     function updateContentF(jsontext)

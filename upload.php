@@ -1,7 +1,25 @@
 <?php
     error_reporting(E_ALL);
     
-    require_once 'vendor\autoload.php';
+        function myErrorHandler($errno, $errstr, $errfile, $errline)
+    {
+//        if (!(error_reporting() & $errno))
+//        {
+//            // This error code is not included in error_reporting
+//            return;
+//        }
+
+        echo "<b>Error</b> [$errno] $errstr in <b>$errfile</b> line $errline <br />\n";
+
+        /* Execute PHP internal error handler */
+        return false;
+    }
+    
+    set_error_handler("myErrorHandler");
+    
+    echo "Before require...";
+    
+    require_once 'vendor/autoload.php';
     use WindowsAzure\Common\ServicesBuilder;
     use WindowsAzure\Common\ServiceException;
 
@@ -72,8 +90,6 @@
 
         <footer>Simple laboratory demo.  (c) 2016 Maksym Davydov.
         </footer>
-
-        <?php print_r($_POST); print_r($_FILES); ?>
 
     </body>
 </html>

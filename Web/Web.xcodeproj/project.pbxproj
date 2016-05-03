@@ -8,6 +8,7 @@
 
 /* Begin PBXFileReference section */
 		381324B71CC65BA600C9A90B /* demotable.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = demotable.php; path = ../demotable.php; sourceTree = "<group>"; };
+		381ED72E1CD8BD690099C3AF /* upload.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = upload.php; path = ../upload.php; sourceTree = "<group>"; };
 		3822B3741CC27FEE003E8C34 /* validation.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = validation.css; path = ../validation.css; sourceTree = "<group>"; };
 		3822B3751CC2966F003E8C34 /* register.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = register.php; path = ../register.php; sourceTree = "<group>"; };
 		3822B3761CC2A477003E8C34 /* database.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = database.php; path = ../database.php; sourceTree = "<group>"; };
@@ -49,6 +50,7 @@
 				385E23041CD0E07A0083010F /* checkcookie.php */,
 				385E23051CD0EA430083010F /* recreate.php */,
 				385E23061CD0F1C40083010F /* signout.php */,
+				381ED72E1CD8BD690099C3AF /* upload.php */,
 			);
 			sourceTree = "<group>";
 		};

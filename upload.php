@@ -19,7 +19,7 @@
     
     echo "Before require...";
     
-    //require_once 'vendor/autoload.php';
+    require_once 'vendor\autoload.php';
     use WindowsAzure\Common\ServicesBuilder;
     use WindowsAzure\Common\ServiceException;
     
@@ -38,8 +38,9 @@
             echo "Line 1 <br>";
             $connectionString = getenv("CUSTOMCONNSTR_blobConnection");
             echo "Line 2 cstr=".$connectionString." <br>";
+            echo "Create service builder...<br>";
             $blobRestProxy = ServicesBuilder::getInstance()->createBlobService($connectionString);
-            echo "Line 3 <br>";
+            echo "Line 3...<br>";
             
             $content = fopen($_FILES["testfile"]["tmp_name"], "r");
             echo "Line 4 <br>";

@@ -39,15 +39,15 @@
             $connectionString = getenv("CUSTOMCONNSTR_blobConnection");
             echo "Line 2 cstr=".$connectionString." <br>";
             $blobRestProxy = ServicesBuilder::getInstance()->createBlobService($connectionString);
-            echo "Line 3 <br>"
+            echo "Line 3 <br>";
             
             $content = fopen($_FILES["testfile"]["tmp_name"], "r");
-            echo "Line 4 <br>"
+            echo "Line 4 <br>";
             $blob_name = hash( "sha256", uniqid("awu4hzkf29384hf", true)."jd9hr123794hrf", false );
-            echo "Line 5 <br>"
+            echo "Line 5 <br>";
             $container_name= "files";
             $url = "https://mdavydovlab7.blob.core.windows.net/files/".$blob_name;
-            echo "Line 6 <br>"
+            echo "Line 6 <br>";
             
             try
             {

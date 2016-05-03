@@ -19,7 +19,7 @@
     
     echo "Before require...";
     
-    require_once 'vendor/autoload.php';
+    //require_once 'vendor/autoload.php';
     use WindowsAzure\Common\ServicesBuilder;
     use WindowsAzure\Common\ServiceException;
 

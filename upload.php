@@ -1,33 +1,12 @@
 <?php
     error_reporting(E_ALL);
     
-        function myErrorHandler($errno, $errstr, $errfile, $errline)
-    {
-//        if (!(error_reporting() & $errno))
-//        {
-//            // This error code is not included in error_reporting
-//            return;
-//        }
-
-        echo "<b>Error</b> [$errno] $errstr in <b>$errfile</b> line $errline <br />\n";
-
-        /* Execute PHP internal error handler */
-        return false;
-    }
-    
-    set_error_handler("myErrorHandler");
-    
-    echo "Before require...";
-    
     require_once 'vendor\autoload.php';
     use WindowsAzure\Common\ServicesBuilder;
     use WindowsAzure\Common\ServiceException;
     
-    echo "Checking file require...";
-
     if ( array_key_exists( "testfile", $_FILES ) )
     {
-        echo "There is some file info";
         if ( $_FILES["testfile"]["error"]!=0 )
         {
             print_r($_FILES);
@@ -35,20 +14,12 @@
         }
         else
         {
-            echo "Line 1 <br>";
             $connectionString = getenv("CUSTOMCONNSTR_blobConnection");
-            echo "Line 2 cstr=".$connectionString." <br>";
-            echo "Create service builder...<br>";
             $blobRestProxy = ServicesBuilder::getInstance()->createBlobService($connectionString);
-            echo "Line 3...<br>";
-            
             $content = fopen($_FILES["testfile"]["tmp_name"], "r");
-            echo "Line 4 <br>";
             $blob_name = hash( "sha256", uniqid("awu4hzkf29384hf", true)."jd9hr123794hrf", false );
-            echo "Line 5 <br>";
             $container_name= "files";
             $url = "https://mdavydovlab7.blob.core.windows.net/files/".$blob_name;
-            echo "Line 6 <br>";
             
             try
             {
